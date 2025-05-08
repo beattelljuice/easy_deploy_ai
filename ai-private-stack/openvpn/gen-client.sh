@@ -10,6 +10,7 @@ sed -i 's/^redirect-gateway.*/# redirect-gateway def1/' "$NAME.ovpn"
 if ! grep -q "route-nopull" "$NAME.ovpn"; then
   echo -e "\nroute-nopull" >> "$NAME.ovpn"
   echo "route 192.168.255.0 255.255.255.0" >> "$NAME.ovpn"
+  echo "route 172.17.0.0 255.255.0.0" >> "$NAME.ovpn"
 fi
 
 echo "Generated and modified client config: $NAME.ovpn"
