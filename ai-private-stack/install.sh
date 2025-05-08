@@ -1,10 +1,10 @@
-cd ~/easy_deploy_ai/ai-private-stack
+cd ~/ai-private-stack
 
 sudo apt update
 sudo apt install -y docker.io docker-compose git curl
 sudo systemctl enable docker
 sudo usermod -aG docker $USER
-newgrp docker  # apply group change immediately
+#newgrp docker  # apply group change immediately
 
 chmod +x pull-model.sh
 chmod +x openvpn/gen-client.sh
