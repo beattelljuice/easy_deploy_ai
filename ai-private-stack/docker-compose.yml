@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  openvpn:
+    image: kylemanna/openvpn
+    container_name: openvpn
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "1194:1194/udp"
+    volumes:
+      - ./openvpn:/etc/openvpn
+    restart: always
+    environment:
+      - OVPN_SERVER=192.168.255.0/24
+      - OVPN_NAT=true
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:ollama
+    container_name: open-webui
+    restart: always
+    volumes:
+      - ollama_data:/root/.ollama
+      - openwebui_data:/app/backend/data
+    ports:
+      - "3000:8080"  # VPN-accessible port
+    networks:
+      - app-net
+
+volumes:
+  ollama_data:
+  openwebui_data:
+
+networks:
+  app-net:
