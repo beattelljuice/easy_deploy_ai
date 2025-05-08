@@ -1,4 +1,4 @@
-cd ~/ai-private-stack
+cd ~/easy_deploy_ai/ai-private-stack
 
 sudo apt update
 sudo apt install -y docker.io docker-compose git curl
