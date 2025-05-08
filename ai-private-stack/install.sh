@@ -1,4 +1,4 @@
-cd ~/ai-private-stack
+cd ~/easy_deploy_ai/ai-private-stack
 
 sudo apt update
 sudo apt install -y docker.io docker-compose git curl
@@ -10,7 +10,7 @@ chmod +x pull-model.sh
 chmod +x openvpn/gen-client.sh
 
 # Get the public IP address
-PUBLIC_IP=$(curl -s ifconfig.me)
+PUBLIC_IP=$(curl -4 ifconfig.me)
 
 # Check if IP was retrieved
 if [ -z "$PUBLIC_IP" ]; then
