@@ -12,7 +12,6 @@ services:
       - ./openvpn-config:/etc/openvpn/config
     cap_add:
       - NET_ADMIN
-    command: /etc/openvpn/config/openvpn.conf
     networks:
       vpn_network:
         ipv4_address: 192.168.255.10
