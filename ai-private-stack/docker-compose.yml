@@ -1,24 +1,23 @@
 version: '3.8'
+
 services:
-  openvpn:
-    image: kylemanna/openvpn
-    container_name: openvpn-server
-    environment:
-      - OPENVPN_PORT=1194
-      - OPENVPN_PROTO=udp
-      - OPENVPN_SUBNET=10.8.0.0
-      - OPENVPN_PERSISTENT_KEY=true
-    ports:
-      - "1194:1194/udp"
-    volumes:
-      - ./openvpn-data:/etc/openvpn
+  openvpn-as:
+    image: openvpn/openvpn-as
+    container_name: openvpn-as
+    restart: unless-stopped
     cap_add:
       - NET_ADMIN
-    networks:
-      - vpn_network
-    restart: always
-
-
+      - MKNOD
+    devices:
+      - /dev/net/tun
+    ports:
+      - "943:943"     # Web UI
+      - "443:443"     # VPN over HTTPS
+      - "1194:1194/udp"  # Traditional OpenVPN UDP
+    volumes:
+      - ./openvpn-data:/openvpn
+    environment:
+      - TZ=UTC  # Optional: adjust to your timezone
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:ollama
@@ -30,11 +29,11 @@ services:
     ports:
       - "3000:8080"
     networks:
-      - vpn_network
+      - default
+
 volumes:
   ollama_data:
   openwebui_data:
+  openvpn-as-data:
 
-networks:
-  vpn_network:
-    driver: host
+# No need for custom networks unless required
