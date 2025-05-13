@@ -1,23 +1,20 @@
 version: '3.8'
 
 services:
-  openvpn-as:
-    image: openvpn/openvpn-as
-    container_name: openvpn-as
+  openvpn:
+    image: kylemanna/openvpn
+    container_name: openvpn
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
-      - MKNOD
     devices:
       - /dev/net/tun
     ports:
-      - "943:943"     # Web UI
-      - "443:443"     # VPN over HTTPS
-      - "1194:1194/udp"  # Traditional OpenVPN UDP
+      - "1194:1194/udp"
     volumes:
-      - ./openvpn-data:/openvpn
-    environment:
-      - TZ=UTC  # Optional: adjust to your timezone
+      - ./openvpn-data:/etc/openvpn
+    networks:
+      - default
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:ollama
