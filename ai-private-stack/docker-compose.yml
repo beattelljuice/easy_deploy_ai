@@ -5,18 +5,16 @@ services:
     image: kylemanna/openvpn
     container_name: openvpn
     restart: always
-    environment:
-      - OVPN_SERVER=10.8.0.0
-      - OVPN_NETWORK=10.8.0.0/24
-      - OVPN_PUSH_DNS=10.8.0.1
     ports:
       - "1194:1194/udp"
     volumes:
       - ./openvpn-data:/etc/openvpn
+      - ./openvpn-config:/etc/openvpn/config  # Mount a directory for custom config
     cap_add:
       - NET_ADMIN
     networks:
       - vpn_network
+    command: /etc/openvpn/config/openvpn.conf  # Use the custom config file
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:ollama
