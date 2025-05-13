@@ -23,8 +23,6 @@ services:
       - openwebui_data:/app/backend/data
     ports:
       - "3000:8080"  # VPN-accessible port
-    networks:
-      - vpn_network
 
 volumes:
   ollama_data:
