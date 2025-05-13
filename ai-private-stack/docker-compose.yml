@@ -1,20 +1,20 @@
 version: '3.8'
-
 services:
   openvpn:
     image: kylemanna/openvpn
-    container_name: openvpn
-    restart: always
+    container_name: openvpn-server
+    environment:
+      - OPENVPN_PORT=1194
+      - OPENVPN_PROTO=udp
+      - OPENVPN_SUBNET=10.8.0.0
+      - OPENVPN_PERSISTENT_KEY=true
     ports:
       - "1194:1194/udp"
     volumes:
       - ./openvpn-data:/etc/openvpn
-      - ./openvpn-config:/etc/openvpn/config
     cap_add:
       - NET_ADMIN
-    networks:
-      vpn_network:
-        ipv4_address: 192.168.255.10
+    restart: always
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:ollama
@@ -25,30 +25,7 @@ services:
       - openwebui_data:/app/backend/data
     ports:
       - "3000:8080"
-    networks:
-      vpn_network:
-        ipv4_address: 192.168.255.20
-
-  vpn-dns:
-    image: andyshinn/dnsmasq
-    container_name: vpn-dns
-    restart: always
-    command: >
-      -k
-      --log-facility=-
-      --server=127.0.0.11
-      --server=8.8.8.8
-    networks:
-      vpn_network:
-        ipv4_address: 192.168.255.2
 
 volumes:
   ollama_data:
   openwebui_data:
-
-networks:
-  vpn_network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.255.0/24
