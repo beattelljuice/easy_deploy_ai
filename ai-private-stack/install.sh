@@ -26,7 +26,7 @@ echo "Using public IP: $PUBLIC_IP"
 docker run --rm -v "$PWD/openvpn-data:/etc/openvpn" kylemanna/openvpn \
   ovpn_genconfig -u udp://$PUBLIC_IP
 
-docker run --rm -v "$PWD/openvpn-data:/etc/openvpn" kylemanna/openvpn \
+docker run -e EASYRSA_BATCH=1 --rm -v "$PWD/openvpn-data:/etc/openvpn" kylemanna/openvpn \
   ovpn_initpki nopass
 
 
