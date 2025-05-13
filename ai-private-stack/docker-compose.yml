@@ -9,10 +9,13 @@ services:
       - "1194:1194/udp"
     volumes:
       - ./openvpn-data:/etc/openvpn
+      - ./openvpn-config:/etc/openvpn/config
     cap_add:
       - NET_ADMIN
+    command: /etc/openvpn/config/openvpn.conf
     networks:
-      - vpn_network
+      vpn_network:
+        ipv4_address: 192.168.255.10
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:ollama
@@ -22,7 +25,23 @@ services:
       - ollama_data:/root/.ollama
       - openwebui_data:/app/backend/data
     ports:
-      - "3000:8080"  # VPN-accessible port
+      - "3000:8080"
+    networks:
+      vpn_network:
+        ipv4_address: 192.168.255.20
+
+  vpn-dns:
+    image: andyshinn/dnsmasq:2.85
+    container_name: vpn-dns
+    restart: always
+    command: >
+      -k
+      --log-facility=-
+      --server=127.0.0.11
+      --server=8.8.8.8
+    networks:
+      vpn_network:
+        ipv4_address: 192.168.255.2
 
 volumes:
   ollama_data:
@@ -31,3 +50,6 @@ volumes:
 networks:
   vpn_network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.255.0/24
