@@ -14,7 +14,11 @@ services:
       - ./openvpn-data:/etc/openvpn
     cap_add:
       - NET_ADMIN
+    networks:
+      - vpn_network
     restart: always
+
+
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:ollama
@@ -25,7 +29,12 @@ services:
       - openwebui_data:/app/backend/data
     ports:
       - "3000:8080"
-
+    networks:
+      - vpn_network
 volumes:
   ollama_data:
   openwebui_data:
+
+networks:
+  vpn_network:
+    driver: host
