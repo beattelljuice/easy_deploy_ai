@@ -21,7 +21,7 @@ fi
 echo "Using public IP: $PUBLIC_IP"
 
 # Run OpenVPN configuration
-docker-compose run --rm openvpn ovpn_genconfig -u udp://$PUBLIC_IP -p "route 192.168.255.0 255.255.255.0"
+docker-compose run --rm openvpn ovpn_genconfig -u udp://$PUBLIC_IP
 docker-compose run --rm openvpn ovpn_initpki
-./openvpn/gen-client.sh
+./openvpn/gen-client.sh client1
 docker-compose up -d
