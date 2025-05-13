@@ -31,7 +31,7 @@ services:
         ipv4_address: 192.168.255.20
 
   vpn-dns:
-    image: andyshinn/dnsmasq:2.85
+    image: andyshinn/dnsmasq
     container_name: vpn-dns
     restart: always
     command: >
