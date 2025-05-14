@@ -14,7 +14,8 @@ services:
     volumes:
       - ./openvpn-data:/etc/openvpn
     networks:
-      - default
+      vpn_network:
+        ipv4_address: 172.21.0.2
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:ollama
@@ -26,11 +27,17 @@ services:
     ports:
       - "3000:8080"
     networks:
-      - default
-
+      vpn_network:
+        ipv4_address: 172.21.0.10
 volumes:
   ollama_data:
   openwebui_data:
   openvpn-as-data:
 
-# No need for custom networks unless required
+networks:
+  vpn_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.21.0.0/24  # Define the subnet for the network
