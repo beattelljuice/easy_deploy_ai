@@ -11,7 +11,7 @@ fi
 
 EASYRSA_DIR="/etc/openvpn/easy-rsa"
 OUTPUT_DIR="/root/client-configs"
-SERVER_IP=$(curl -s ifconfig.me)
+SERVER_IP=$(curl -4 ifconfig.me)
 
 cd "$EASYRSA_DIR"
 
