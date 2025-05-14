@@ -23,7 +23,7 @@ cd "$EASYRSA_DIR"
 mkdir -p "$OUTPUT_DIR"
 
 # Generate client .ovpn config
-cat > "$OUTPUT_DIR/${CLIENT}.ovpn" <<EOF
+cat > "$OUTPUT_DIR/${CLIENT}.ovpn" <<EOF 
 client
 dev tun
 proto udp
