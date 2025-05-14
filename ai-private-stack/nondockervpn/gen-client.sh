@@ -12,9 +12,7 @@ fi
 EASYRSA_DIR="/etc/openvpn/easy-rsa"
 OUTPUT_DIR="/root/client-configs"
 SERVER_IP=$(curl -4 ifconfig.me)
-
-echo $SERVER_IP
-
+echo "$SERVER_IP"
 cd "$EASYRSA_DIR"
 
 # Generate client key and certificate
@@ -52,5 +50,3 @@ $(cat "$EASYRSA_DIR/pki/private/${CLIENT}.key")
 $(cat /etc/openvpn/ta.key)
 </tls-auth>
 EOF
-
-echo "Client config generated at: $OUTPUT_DIR/${CLIENT}.ovpn"
