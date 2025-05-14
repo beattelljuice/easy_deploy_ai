@@ -7,4 +7,4 @@ sudo usermod -aG docker $USER
 chmod +x pull-model.sh
 docker-compose up -d
 
-./pull-model.sh qwen3:1.7b
+./pull-model.sh qwen3:0.6b
