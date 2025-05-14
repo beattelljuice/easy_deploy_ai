@@ -13,6 +13,8 @@ EASYRSA_DIR="/etc/openvpn/easy-rsa"
 OUTPUT_DIR="/root/client-configs"
 SERVER_IP=$(curl -4 ifconfig.me)
 
+echo $SERVER_IP
+
 cd "$EASYRSA_DIR"
 
 # Generate client key and certificate
